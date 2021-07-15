@@ -44,7 +44,9 @@ export class AdminComponent implements OnInit {
       }
       else
       {
-        localStorage.setItem("Admin",this.LogInModel.Username);
+        localStorage.setItem("Admin",this.Response.name as string);
+        localStorage.setItem("AToken", this.Response.token as string);
+        localStorage.setItem("AExpiration", this.Response.expiration as string);
         this.LogInModel.Username = '';
         this.LogInModel.Password = '';
         this.router.navigate(['./Index'],{relativeTo : this.route});

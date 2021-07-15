@@ -2,12 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AmazonDemo.Authenticate;
 using AmazonDemo.Models;
 using AmazonDemo.Models.IRepository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AmazonDemo.Controllers
 {
+    [Authorize(Roles = UserRolesAmazon.User)]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class CartController : Controller

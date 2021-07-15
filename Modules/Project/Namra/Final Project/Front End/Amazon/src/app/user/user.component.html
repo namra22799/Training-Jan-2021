@@ -61,6 +61,9 @@
                 Product Name
             </td>
             <td>
+                Quantity
+            </td>
+            <td>
                 Bill
             </td>
             <td>
@@ -71,10 +74,13 @@
         </tr>
         <tr *ngFor="let l of placedProducts; let idx = index">
             <td>
-                {{l.placedOrderId}}
+                #{{l.placedOrderId}}
             </td>
             <td>
                 {{products[idx].productName}}
+            </td>
+            <td>
+                {{l.quantity}}
             </td>
             <td>
                 {{l.bill}}
@@ -88,7 +94,7 @@
                 </button>
             </td>
             <td>
-                <button class="btn btn-outline-danger returnButton" (click)="Return(l.placedOrderId)" [disabled]="l.placedStatus == 'Returned'">
+                <button class="btn btn-outline-danger returnButton" (click)="Return(l.poId)" [disabled]="l.placedStatus == 'Returned'">
                     <span>Return</span>
                 </button>
             </td>

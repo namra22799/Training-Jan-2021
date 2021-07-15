@@ -48,8 +48,16 @@ namespace AmazonDemo.Controllers
         [HttpGet("{LogInId}")]
         public User GetByUserLogin(string LogInId)
         {
-                return user.Find(s => s.UserLogIn == LogInId).First();
-            
+            if(user.Any(s=>s.UserLogIn == LogInId))
+            {
+                return user.Find(s => s.UserLogIn == LogInId).FirstOrDefault();
+            }
+            else
+            {
+                User u = new User() { };
+                u.UserId = 0;
+                return u; 
+            }
         }
 
         [HttpPost]

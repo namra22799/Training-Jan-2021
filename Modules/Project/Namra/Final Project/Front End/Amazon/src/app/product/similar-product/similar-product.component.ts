@@ -20,14 +20,13 @@ export class SimilarProductComponent implements OnInit {
   
   }
   ngOnChanges(changes:SimpleChanges) {
-    console.log( changes );
-    console.log(this.related);
     this.descriptionService.GetProductByRelatedCategory(this.related).subscribe(data=>{
       this.products = data;
     });
   }
   productClick(Id : number)
   {
+    window.scroll(0,0);
     this.router.navigate(['../../Product',Id],{relativeTo : this.route});
   }
   imgPath(str : string)

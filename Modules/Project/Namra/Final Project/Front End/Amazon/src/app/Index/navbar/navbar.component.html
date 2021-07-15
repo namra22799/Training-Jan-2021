@@ -8,7 +8,7 @@
             <div class="input-group-prepend dropdown">
                 <span class="input-group-text dropdown-toggle" data-toggle="dropdown">All</span>
                 <div class="dropdown-menu">
-                    <a href="#" class="dropdown-item" [routerLink]="['../Search/All']">All Department</a>
+                    <a href="#" class="dropdown-item" [routerLink]="['../Search/All']">All </a>
                     <a href="#" class="dropdown-item" [routerLink]="['../Search/Book']">Books</a>
                     <a href="#" class="dropdown-item" [routerLink]="['../Search/Video Game']">Games</a>
                     <a href="#" class="dropdown-item" [routerLink]="['../Search/Laptop']">Computers</a>
@@ -42,7 +42,7 @@
                             class="fas fa-shopping-cart"></i>&nbsp;<span class="h5" *ngIf="CartLength!=0">{{CartLength}}</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white"> 24 X 7&nbsp;<i class="far fa-question-circle"></i></a>
+                    <a class="nav-link text-white" [routerLink]="['../Services']"> 24 X 7&nbsp;<i class="far fa-question-circle"></i></a>
                 </li>
                 <li class="nav-item" *ngIf='NavbarFlag == false'>
                     <a class="nav-link text-white" [routerLink]="['../Home']">Go back&nbsp;<i

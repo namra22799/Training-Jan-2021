@@ -16,7 +16,7 @@ namespace AmazonDemo.Controllers
         private readonly AmazonContext context;
         ISeller seller;
         IProduct product;
-        public SellerProductController(IProduct product,AmazonContext context, ISellerProduct seller, ISeller sel)
+        public SellerProductController(IProduct product, AmazonContext context, ISellerProduct seller, ISeller sel)
         {
             this.product = product;
             this.context = context;
@@ -28,6 +28,12 @@ namespace AmazonDemo.Controllers
         public IEnumerable<SellerProduct> GetAll()
         {
             return sellerProduct.GetAll();
+        }
+
+        [HttpGet("{SellerId}")]
+        public IEnumerable<SellerProduct> GetBySellerId(int SellerId)
+        {
+            return this.sellerProduct.Find(s => s.SellerId == SellerId);
         }
 
         [HttpGet("{productId}")]

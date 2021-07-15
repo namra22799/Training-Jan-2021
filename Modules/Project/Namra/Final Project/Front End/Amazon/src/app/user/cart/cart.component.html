@@ -1,6 +1,8 @@
 <div class="container mt-5">
     <p class="display-4 text-center mt-5">
-        Cart&nbsp;<i class="fas cartLogo fa-cart-arrow-down"></i>
+        Cart&nbsp;<i class="fas  fa-cart-arrow-down" 
+        [ngClass]="{cartLogo : (!CartFlag), dangerLogo : (CartFlag)}"
+        ></i>
     </p>
 </div>
 <hr class="container">
@@ -34,7 +36,7 @@
         </div>
     </div>
 </div>
-<div class="text-center table-danger" *ngIf="carts.length == 0">
+<div class="text-center table-danger" *ngIf="CartFlag">
     <p class="display-1 text-dark p-5">
         Cart is Empty
     </p>

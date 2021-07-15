@@ -7,6 +7,7 @@ namespace AmazonDemo.Models
 {
     public partial class PlacedOrder
     {
+        public long POId { get; set; }
         public long PlacedOrderId { get; set; }
         public int UserId { get; set; }
         public int ProductId { get; set; }

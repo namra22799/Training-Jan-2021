@@ -34,6 +34,6 @@ export class UserService {
     this.loginModel.Username = user.userLogIn;
     this.loginModel.Password = user.userPassword as unknown as string;
     this.loginModel.Email = user.userEmail;
-    return this.httpClient.post<RegisterResponse>(this.URL+"authenticate/register",this.loginModel);
+    return this.httpClient.post<RegisterResponse>(this.URL+"Authenticate/register",this.loginModel);
   }
 }

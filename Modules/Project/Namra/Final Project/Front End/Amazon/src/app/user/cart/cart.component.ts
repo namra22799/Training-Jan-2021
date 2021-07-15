@@ -23,26 +23,40 @@ export class CartComponent implements OnInit {
   products : Product[] = [];
   Id : number = 0;
   CartLength : number = 0;
+  CartFlag = false;
   ngOnInit(): void {
    this.GetCart();
   }
   GetCart()
   {
-    
       this.loginService.GetUserDataByLogin(localStorage.getItem("UserName") as string).subscribe(data=>{
         this.user = data;
         this.Id = this.user.userId as number;
         this.cartService.GetCartByUser(this.user.userId as number).subscribe(data=>{
           this.carts = data;
           this.CartLength = this.carts.length;
-         
+          if(this.CartLength == 0)
+          {
+            this.CartFlag = true;
+          }
+          else
+          {
+            this.CartFlag = false;
+          }
+        },
+        (error)=>{
+          this.router.navigate(['../Login'], { relativeTo: this.route });
         });
         this.cartService.GetProductByUser(this.user.userId as number).subscribe(data=>{
           this.products = data;
+        },
+        (error)=>{
+          this.router.navigate(['../Login'], { relativeTo: this.route });
         });
+      },
+      (error)=>{
+        this.router.navigate(['../Login'], { relativeTo: this.route });
       });
-      
-
   }
 
   deleteCart(id : number, pId : number)
@@ -56,6 +70,9 @@ export class CartComponent implements OnInit {
       {
         alert("Not deleted..");
       }
+    },
+    (error)=>{
+      this.router.navigate(['../Login'], { relativeTo: this.route });
     });
   }
   cls : ClassOrder = {
@@ -85,6 +102,9 @@ export class CartComponent implements OnInit {
       else{
         alert("Order is moved to the bag...");
       }
+    },
+    (error)=>{
+      this.router.navigate(['../Login'], { relativeTo: this.route });
     });
   }
   clickProduct(id:number)

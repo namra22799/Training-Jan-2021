@@ -13,9 +13,11 @@ namespace AmazonDemo.Controllers
     public class SellerAddressController : Controller
     {
         ISellerAddress sellerAddress;
+        ISeller seller;
         ICity city;
-        public SellerAddressController(ISellerAddress sellerAddress, ICity city)
+        public SellerAddressController(ISeller seller,ISellerAddress sellerAddress, ICity city)
         {
+            this.seller = seller;
             this.city = city;
             this.sellerAddress = sellerAddress;
         }
@@ -43,7 +45,7 @@ namespace AmazonDemo.Controllers
         {
             if(!sellerAddress.Any(s=>s.SellerId == sl.SellerId && s.SellerCityId == sl.SellerCityId && s.SellerAddress1 == sl.SellerAddress1))
             {
-                if (sellerAddress.Any(s => s.SellerId == sl.SellerId))
+                if (seller.Any(s => s.SellerId == sl.SellerId))
                 {
                     if(city.Any(s=>s.CityId == sl.SellerCityId))
                     {

@@ -202,6 +202,10 @@ namespace AmazonDemo.Models
             {
                 entity.ToTable("PlacedOrder");
 
+                entity.Property(e => e.POId).HasColumnName("POId");
+
+                entity.HasKey(e => e.POId);
+
                 entity.Property(e => e.PlacedOrderId).HasColumnName("PlacedOrderID");
 
                 entity.Property(e => e.PlacedDate)

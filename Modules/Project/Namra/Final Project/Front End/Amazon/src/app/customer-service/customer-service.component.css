@@ -1,0 +1,17 @@
+.center{
+    font-size: 7vmin;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+}
+.fontSmall
+{
+    font-size: small;
+}
+
+@media screen and (min-width : 600px) {
+    .background :hover :not(.fontSmall,.fab,.fas,.fa-shield-alt,h5,.far){
+        background-image: linear-gradient(rgba(255, 255, 255, 0.63), rgba(202, 202, 202, 0.486));
+    }
+}

@@ -12,6 +12,10 @@
         width: 70%;
     }
 }
+.ImgModal{
+    width: 100%;
+    max-height: 570px;
+}
 .center
 {
     display: flex;
@@ -19,6 +23,7 @@
     align-content: center;
     flex-direction: column;
 }
+
 @media screen and (min-width : 600px) {
     .DisplayImageLG{
         display: inline-flex;
@@ -59,5 +64,16 @@
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 16px;
+}
+.offerBack {
+    background-image: linear-gradient(to right, rgb(121, 255, 244) , rgb(159, 255, 140));
+    color: black;
+}
+.modal-body{
+    height: 600px;
+}
+.sideImages{
+    height: 570px;
+    overflow-y: auto;
 }
 

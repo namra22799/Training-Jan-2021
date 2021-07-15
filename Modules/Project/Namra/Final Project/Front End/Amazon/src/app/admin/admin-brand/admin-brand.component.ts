@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Brand } from 'src/app/Models/BrandCategory';
 import { BrandCategoryService } from 'src/app/Services/brand-category.service';
 
@@ -9,9 +10,10 @@ import { BrandCategoryService } from 'src/app/Services/brand-category.service';
 })
 export class AdminBrandComponent implements OnInit {
 
-  constructor(private service : BrandCategoryService) { }
+  constructor(private router : Router,private service : BrandCategoryService) { }
 
   ngOnInit(): void {
+    this.check();
     this.GetBrands();
   }
   findName = '';
@@ -31,6 +33,13 @@ export class AdminBrandComponent implements OnInit {
       this.service.SearchBrand(this.findName).subscribe(data=>{
         this.Brands = data;
       });
+    }
+  }
+  check()
+  {
+    if(localStorage.getItem("Admin")=='')
+    {
+      this.router.navigate(['./Admin']);
     }
   }
   brand : Brand = {

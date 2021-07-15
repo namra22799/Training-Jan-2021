@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AmazonDemo.Controllers
 {
-
+    [Authorize(Roles = UserRolesAmazon.User)]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class OrderController : ControllerBase

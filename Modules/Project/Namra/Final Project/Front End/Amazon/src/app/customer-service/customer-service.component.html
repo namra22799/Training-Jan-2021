@@ -1,0 +1,221 @@
+<div class="container h2 my-4 font-weight-normal p-2">
+    Hello. What we can help you with?
+</div>
+<hr>
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-12 pb-4" style="font-size: x-large;">
+            Somethings you can do here...
+        </div>
+        <div class="col-md-4 col-sm-12 col-12 p-4 background">
+            <div class="row border border-dark  rounded" (click)="UserPage()">
+                <div class="col-4 text-center center">
+                    <i class="fas fa-box-open"></i>
+                </div>
+                <div class="col-8 p-3">
+                    <h5 class="">Your Orders</h5>
+                    <span class="fontSmall">
+                        Track packages
+                    </span> <br>
+                    <span class="fontSmall">
+                        Edit or cancel order
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-12 col-12 p-4 background">
+            <div class="row border border-dark  rounded" (click)="UserPage()">
+                <div class="col-4 text-center center">
+                    <i class="fas fa-sync-alt"></i>
+                </div>
+                <div class="col-8 p-3">
+                    <h5>Returns & Refunds</h5>
+                    <span class="fontSmall">
+                        Return or exchange items
+                    </span> <br>
+                    <span class="fontSmall">
+                        Print return mailing labels
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-12 col-12 p-4 background">
+            <div class="row border border-dark rounded" data-toggle='modal' data-target='#CustomerModal' (click)="ModalTitle='Get Product Help';ProductHelpFlag=true;">
+                <div class="col-4 text-center center">
+                    <i class="fas fa-tools"></i>
+                </div>
+                <div class="col-8 p-3">
+                    <h5>Get Product Help</h5>
+                    <span class="fontSmall">
+                        Troubleshoot product setup and usage issues
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-12 col-12 p-4 background">
+            <div class="row border border-dark  rounded" (click)="UserPage()">
+                <div class="col-4 text-center center">
+                    <i class="fas fa-user-cog"></i>
+                </div>
+                <div class="col-8 p-3">
+                    <h5>Your Account</h5>
+                    <span class="fontSmall">
+                        Manage your account preferences
+                    </span><br>
+                    <span class="fontSmall">
+                        Manage your account
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-12 col-12 p-4 background">
+            <div class="row border border-dark  rounded" data-toggle='modal' data-target='#CustomerModal' (click)="ModalTitle='Amazon and COVID-19';AmazonCovidFlag=true;">
+                <div class="col-4 text-center center">
+                    <i class="fas fa-first-aid"></i>
+                </div>
+                <div class="col-8 p-3">
+                    <h5>Amazon and COVID-19</h5>
+                    <span class="fontSmall">
+                        FAQs about the impact on ordering
+                    </span><br>
+                    <span class="fontSmall">
+                        Delivery aspects
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-12 col-12 p-4 background">
+            <div class="row border border-dark  rounded" data-toggle='modal' data-target='#CustomerModal' (click)="ModalTitle='Safe Online Shopping';ShoppingFlag=true;">
+                <div class="col-4 text-center center">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div class="col-8 p-3">
+                    <h5>Safe Online Shopping</h5>
+                    <span class="fontSmall">
+                        Learn how to protect your account
+                    </span><br>
+                    <span class="fontSmall">
+                        Report something suspicious
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-12 col-12 p-4 background">
+            <div class="row border border-dark  rounded" data-toggle='modal' data-target='#CustomerModal' (click)="ModalTitle='Manage Prime';ManagePrimeFlag=true;">
+                <div class="col-4 text-center center">
+                    <i class="fab fa-amazon"></i>
+                </div>
+                <div class="col-8 p-3">
+                    <h5>Manage Prime</h5>
+                    <span class="fontSmall">
+                        Learn about Prime benefits
+                    </span><br>
+                    <span class="fontSmall">
+                        Cancel Prime Membership
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-12 col-12 p-4 background">
+            <div class="row border border-dark  rounded" data-toggle='modal' data-target='#CustomerModal' (click)="ModalTitle='Payments & Gift Cards';PaymentGiftFlag=true;">
+                <div class="col-4 text-center center">
+                    <i class="far fa-credit-card"></i>
+                </div>
+                <div class="col-8 p-3">
+                    <h5>Payments & Gift Cards</h5>
+                    <span class="fontSmall">
+                        Add or edit payment Methods
+                    </span><br>
+                    <span class="fontSmall">
+                        View, reload gift card balance
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-12 col-12 p-4 background">
+            <div class="row border border-dark  rounded" data-toggle='modal' data-target='#CustomerModal' (click)="ModalTitle='Digital Services and Device Support';DigitalFlag=true;">
+                <div class="col-4 text-center center">
+                    <i class="fas fa-desktop"></i>
+                </div>
+                <div class="col-8 p-3">
+                    <h5>Digital Services and Device Support</h5>
+                    <span class="fontSmall">
+                        Troubleshoot device issues
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="CustomerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                {{ModalTitle}}
+                <button type="button" class="close" data-dismiss="modal" (click)="ResetFlags()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div *ngIf="ProductHelpFlag == true">
+                    <div class="row p-3">
+                        <div class="col-12">
+                            <h5>Technical support</h5>
+                        </div>
+                        <div class="col-12 mb-3">
+                            Talk to an expert when you need help getting your product set up or troubleshooting issues.
+                        </div>
+                        <div class="col-12">
+                            <h5>Parts replacement</h5>
+                        </div>
+                        <div class="col-12">
+                            Replace missing or broken parts for free. We can send you replacement parts for large items like furniture and appliances.
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="AmazonCovidFlag == true" class="p-3">
+                    From packing of product to the destination of product, we make sure that product is being carefully delivered under full safety.
+                </div>
+                <div *ngIf="ShoppingFlag == true" class="p-3">
+                    Find your deal with great offers and acquire the best discount. Find out so many products in all range suitable to you.
+                </div>
+                <div *ngIf="ManagePrimeFlag == true" class="p-3">
+                    Get Prime with faster delivery, great latest content. Find interesting prime deals and get your package withing 2 working days.
+                </div>
+                <div *ngIf="PaymentGiftFlag == true" class="p-3">
+                    Find exciting and grab offer with great prizes with up to 50% off on great brands. Make a safe payment and don't share your credit/debit details to any one. We make sure that we make your data secure.
+                </div>
+                <div *ngIf="DigitalFlag == true">
+                    <div class="row p-3">
+                        <div class="col-12 mb-3 text-center">
+                            <h5>Things you can do</h5>
+                        </div>
+                        <div class="col-6 mb-3">
+                            View or cancel digital orders
+                        </div>
+                        <div class="col-6 mb-3">
+                            Manage devices
+                        </div>
+                        <div class="col-6 mb-3">
+                            Ask the amazon community
+                        </div>
+                        <div class="col-6 mb-3">
+                            Manage digital content
+                        </div>
+                        <div class="col-6 mb-3">
+                            Change your digital and device settings
+                        </div>
+                        <div class="col-6 mb-3">
+                            Install or remove apps
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>

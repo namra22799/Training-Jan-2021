@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Brand, Category } from 'src/app/Models/BrandCategory';
 import { ProductDescription } from 'src/app/Models/ProductDescription';
 import { ProductImage } from 'src/app/Models/ProductImage';
@@ -19,7 +20,7 @@ export class AdminProductComponent implements OnInit {
 
   productForm = new FormGroup({});
 
-  constructor(private descSer: ProductDescriptionService, private imageService: ProductImageService, private demoService: DemoService, private searchService: SearchService, private fb: FormBuilder, private service: BrandCategoryService) {
+  constructor(private router : Router,private descSer: ProductDescriptionService, private imageService: ProductImageService, private demoService: DemoService, private searchService: SearchService, private fb: FormBuilder, private service: BrandCategoryService) {
     this.form();
     this.formDescription();
     this.service.AllBrands().subscribe(data => {
@@ -96,6 +97,7 @@ export class AdminProductComponent implements OnInit {
 
   products: Product[] = [];
   ngOnInit(): void {
+    this.check();
     this.Display();
   }
   DeleteId = 0;
@@ -149,6 +151,13 @@ export class AdminProductComponent implements OnInit {
   }
   clearPath() {
     this.prc.imgPath = '';
+  }
+  check()
+  {
+    if(localStorage.getItem("Admin")=='')
+    {
+      this.router.navigate(['./Admin']);
+    }
   }
   imgPath(str: string) {
     if (str.startsWith('assets')) {

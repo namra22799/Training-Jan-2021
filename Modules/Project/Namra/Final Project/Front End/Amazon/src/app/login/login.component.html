@@ -92,9 +92,15 @@
                     </div>
                     <div>
                         <label for="Password">Password</label>
-                        <input type="text" [(ngModel)]="user.userPassword"
-                            [ngClass]="{danger : (Password.touched && Password.invalid), shadow : (Password.untouched || Password.valid)}"
-                            placeholder="Password" class="form-control p-3 mb-3" formControlName="PassWord">
+                        <div class="input-group mb-3" [ngClass]="{danger : (Password.touched && Password.invalid), shadow : (Password.untouched || Password.valid)}">
+                            <input type="{{userType}}" [(ngModel)]="user.userPassword"
+                            placeholder="Password" class="form-control p-3" formControlName="PassWord">        
+                            <div class="input-group-append p-3" (click)="changeVisiblePassword()">
+                                <span *ngIf="visibleUserPassword == false" class="input-group-text bg-white"><i class="far fa-eye-slash"></i></span>
+                                <span *ngIf="visibleUserPassword == true" class="input-group-text bg-white"><i class="far fa-eye"></i></span>
+                            </div>
+                        </div>
+                        
                     </div>
                     <div>
                         <label for="ContactNo">ContactNo</label>
@@ -119,10 +125,8 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" [disabled]='UserFormBuilder.status=="INVALID"' class="btn btn-primary"
-                    (click)="submit();RegisterFlag=true">Submit</button>
-                <button type="button" [disabled]="RegisterFlag==false" (click)="RegisterUser();RegisterFlag=false;RESETUSER()" class="btn btn-success">
-                    Register
-                </button>
+                    (click)="submit();">Submit</button>
+                
             </div>
         </div>
     </div>

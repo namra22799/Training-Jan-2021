@@ -7,6 +7,7 @@ import { AdminProductComponent } from './admin/admin-product/admin-product.compo
 import { AdminSellerInfoComponent } from './admin/admin-seller-info/admin-seller-info.component';
 import { AdminSellerComponent } from './admin/admin-seller/admin-seller.component';
 import { AdminComponent } from './admin/admin.component';
+import { CustomerServiceComponent } from './customer-service/customer-service.component';
 import { HomeComponent } from './Index/Home/home.component';
 import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -51,6 +52,9 @@ const routes: Routes = [
   },
   {
     path : 'Product/:id', component : ProductComponent
+  },
+  {
+    path : 'Services', component : CustomerServiceComponent
   },
   {
     path : 'Search/:name', component : SearchComponent

@@ -58,6 +58,8 @@ namespace AmazonDemo.Controllers
 
             List<Product> products = new List<Product>();
 
+
+
             IEnumerable<Product> pSearch = product.Find(s => s.ProductName.ToLower().Contains(SearchName.ToLower()));
 
             foreach (var item in pSearch)
@@ -94,9 +96,29 @@ namespace AmazonDemo.Controllers
                     }
                 }
             }
+            IEnumerable<ProductDescription> productDescriptions = productDescription.Find(s => s.ExtraDescription.ToLower().Contains(SearchName.ToLower()) || s.RelatedCategory.ToLower().Contains(SearchName.ToLower()));
+            foreach (var item in productDescriptions)
+            {
+                if(!products.Any(s=>s.ProductId == item.ProductId))
+                {
+                    products.Add(product.Find(s => s.ProductId == item.ProductId).First());
+                }
+
+            }
             return products;
         }
 
+        [HttpGet("{sname}")]
+        public IEnumerable<Product> GetByDescription(string sname)
+        {
+            IEnumerable<ProductDescription> productDescriptions = productDescription.Find(s => s.ExtraDescription.ToLower().Contains(sname.ToLower()) || s.RelatedCategory.ToLower().Contains(sname.ToLower()));
+            List<Product> products = new List<Product>();
+            foreach (var item in productDescriptions)
+            {
+                products.Add(product.Find(s => s.ProductId == item.ProductId).First());
+            }
+            return products;
+        }
 
         [HttpGet("{Price}")]
         public IEnumerable<Product> GetByPrice(int Price)

@@ -44,11 +44,21 @@ export class LoginComponent implements OnInit {
       BirthDate: ['', Validators.compose([Validators.required, DOBValidatior(5,100).bind(this)])]
     })
   }
-
+  date : Date = new Date();
   submit()
   {
     this.userService.CreateUser(this.user).subscribe(data=>{
-      alert("Your user id is : "+data);
+      if(data == 0)
+      {
+        alert("User is already exists...");
+      }
+      else
+      {
+        alert("User id is : "+data);
+        this.userService.RegisterUser(this.user).subscribe(data=>{
+          console.log(data);
+        });
+      }
     });
   }
   RegisterFlag = false;
@@ -98,6 +108,21 @@ export class LoginComponent implements OnInit {
       this.visiblePassword = false;
     }
   } 
+  visibleUserPassword = false;
+  userType : string = 'password';
+  changeVisiblePassword()
+  {
+    if(this.visibleUserPassword == false)
+    {
+      this.visibleUserPassword = true;
+      this.userType = "text";
+    }
+    else
+    {
+      this.userType = "password";
+      this.visibleUserPassword = false;
+    }
+  }
   Login(){
     this.LoginSer.LogIN(this.LogInModel).subscribe(data=>{
       this.Response = data;
@@ -107,11 +132,24 @@ export class LoginComponent implements OnInit {
       }
       else
       {
-        localStorage.setItem('token',this.Response.token as string);
-        localStorage.setItem('UserName', this.Response.name as string);
-        localStorage.setItem('Expiration',this.Response.expiration as string);
-        console.log(this.Response.expiration);
-        this.router.navigate(['../Home'],{relativeTo : this.route});
+        this.LoginSer.GetUserDataByLogin(this.Response.name as string).subscribe(
+        data=>{
+          console.log(data);
+          if(data.userId == 0)
+          {
+            alert("Please enter a valid user name...");
+          }
+          else
+          {
+            localStorage.setItem('token',this.Response.token as string);
+            localStorage.setItem('UserName', this.Response.name as string);
+            localStorage.setItem('Expiration',this.Response.expiration as string);
+            this.router.navigate(['../Home'],{relativeTo : this.route});  
+          }
+          },
+          (error)=>{
+            this.router.navigate(['../Login'], { relativeTo: this.route });
+          }); 
       }
     },
     (error)=>{

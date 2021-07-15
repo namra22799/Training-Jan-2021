@@ -1,1 +1,316 @@
-<p>admin-seller-info works!</p>
+<div class="container">
+    <div class="row containerTitle mb-4">
+        <div class="col-12 backSeller p-3 display-4 text-center">
+            {{seller.sellerCompanyName}}
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-md-5 containerTitle p-4 rounded col-sm-12 col-12 mb-3">
+            <p class=" h5 text-center">Personal Details</p>
+            <div class="row">
+                <div class="col-md-3 col-sm-0 col-0"></div>
+                <div class="col-md-8 p-3  col-sm-12 col-12 mt-3 ">
+                    Name : {{seller.sellerName}} <br>
+                    Company : {{seller.sellerCompanyName}} <br>
+                    Contact : {{seller.sellerContactNo}} <br>
+                    Email : {{seller.sellerEmail}} <br>
+                    <div class="row mt-4">
+                        <div class="col-md-8 col-sm-12 col-12 text-center">
+                            <button class="btn btn-outline-primary" data-toggle='modal' data-target='#UpdateSeller'
+                                (click)="SellerDataById()">
+                                <i class="fas fa-pen"></i>&nbsp;Update
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1 col-sm-0 col-0"></div>
+        <div class="col-md-6 h-100 rounded containerTitle p-4 col-sm-12 col-12">
+            <p class=" h5 text-center mb-4">Addresses</p>
+            <div class="row">
+                <div class="col-6 mb-3" *ngFor="let l of sellerAddresses; let idx = index">
+                    <div class="card backBrand h-100" (click)="SetAddress(l);AddressFlag = false;" data-toggle='modal'
+                        data-target='#SellerAddressModal'>
+                        <div class="card-body colorAdd h6 center text-center">
+                            {{l.sellerAddress1}}
+                        </div>
+                        <div class="card-footer text-center colorFooter h6">
+                            City : {{CityAddress[idx].cityName}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card AddBack h-100" (click)="ResetAddress();AddressFlag = true;" data-toggle='modal' data-target='#SellerAddressModal'>
+                        <div class="card-body  textVerti AddColor p-4 center h4  text-center">
+                            <i class="fas fa-plus AddColor"></i>&nbsp; Add
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row containerTitle rounded p-3">
+        <div class="col-12">
+            <p class="text-center p-2 backSeller h2 ProductBack rounded">
+                Products
+            </p>
+            <div class="row mt-3">
+                <div class="col-lg-3 col-md-4 col-sm-6 col-6" *ngFor="let l of products;let idx = index">
+                    <div class="card border border-white">
+                        <div class="card-header text-center">
+
+                            <span class="float-right text-danger" (click)="sellerProductDelete(sellerProduct[idx].sellerProductId)">
+                                <i class="fas fa-times"></i>
+                            </span>
+                            {{l.productName}}
+                        </div>
+                        <div class="card-body center h-100">
+
+                            <a>
+                                <img src="../../../{{l.imgPath}}" *ngIf="imgPath(l.imgPath)" alt="Image"
+                                    class="seachProduct card-img">
+                                <img src="{{l.imgPath}}" *ngIf="!imgPath(l.imgPath)" alt="Image"
+                                    class="seachProduct card-img">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 col-6">
+                    <div class="card bg-light h-100" data-toggle='modal' data-target='#SellerProductModal'>
+                        <div class="card-body  textVerti AddColor p-4 center h4  text-center">
+                            <i class="fas fa-plus AddColor"></i>&nbsp; Product
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row containerTitle rounded p-3 my-4">
+        <div class="col-12 ">
+            <p class="text-center p-2 backSeller h2 ProductBack rounded">
+                Cities
+            </p>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-sm-6 col-6 mt-3" *ngFor="let l of cities;let idx = index">
+                    <div class="card border border-white">
+                        <div class="card-header text-center">
+    
+                            <span class="float-right text-danger" (click)="DeleteSellerDeliverable(deliverableData[idx].sellerDeliverableId)">
+                                <i class="fas fa-times"></i>
+                            </span>
+                            {{l.cityName}}
+                        </div>
+                    </div>
+                </div> 
+                <div class="col-lg-3 col-md-4 col-sm-6 col-6 mt-3">
+                    <div class="card border border-dark"  data-toggle='modal' data-target='#SellerDeliverableModal'>
+                        <div class="card-header AddColor text-center">
+                            <i class="fas fa-plus AddColor"></i>&nbsp; City
+                        </div>
+                    </div>
+                </div>    
+            </div>
+        </div>
+    </div>
+    <div class="row my-4">
+        <div class="col-12 text-right">
+            <button class="btn btn-danger" data-toggle='modal' data-target='#DeleteModal'>
+                <i class="fas fa-trash"></i>&nbsp;Delete
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="UpdateSeller" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" (click)="SellerDataById()" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="sellerForm" #f='ngForm'>
+                    <div class="text-center display-4">
+                        Seller Id : # {{seller.sellerId}}
+                    </div>
+                    <div>
+                        <label for="Seller Name">Seller Name</label>
+                        <input type="text" [(ngModel)]="seller.sellerName"
+                            [ngClass]="{danger : (fSellerName.touched && fSellerName.invalid), shadow : (fSellerName.untouched || fSellerName.valid)}"
+                            placeholder="Name" class="form-control p-3 mb-3" formControlName="FSellerName">
+                    </div>
+                    <div>
+                        <label for="Company Name">Company Name</label>
+                        <input type="text" [(ngModel)]="seller.sellerCompanyName"
+                            [ngClass]="{danger : (fSellerCompanyName.touched && fSellerCompanyName.invalid), shadow : (fSellerCompanyName.untouched || fSellerCompanyName.valid)}"
+                            placeholder="Name" class="form-control p-3 mb-3" formControlName="FSellerCompanyName">
+                    </div>
+                    <div>
+                        <label for="Contact number">Contact number</label>
+                        <input type="text" [(ngModel)]="seller.sellerContactNo"
+                            [ngClass]="{danger : (fSellerContactNo.touched && fSellerContactNo.invalid), shadow : (fSellerContactNo.untouched || fSellerContactNo.valid)}"
+                            placeholder="Name" class="form-control p-3 mb-3" formControlName="FSellerContactNo">
+                    </div>
+                    <div>
+                        <label for="Email">Email</label>
+                        <input type="text" [(ngModel)]="seller.sellerEmail"
+                            [ngClass]="{danger : (fSellerEmail.touched && fSellerEmail.invalid), shadow : (fSellerEmail.untouched || fSellerEmail.valid)}"
+                            placeholder="Name" class="form-control p-3 mb-3" formControlName="FSellerEmail">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn cancelBtn" (click)="SellerDataById()"
+                    data-dismiss="modal">Close</button>
+                <button class="btn btn-outline-primary" (click)="UpdateSeller();" data-dismiss="modal">
+                    <i class="fas fa-pencil-alt"></i>&nbsp;Update
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="SellerAddressModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="sellerAddressForm" #f='ngForm'>
+                    <div>
+                        <label for="Seller Name">Address</label>
+                        <input type="text" [(ngModel)]="sellerAddress.sellerAddress1"
+                            [ngClass]="{danger : (fSellerAddress1.touched && fSellerAddress1.invalid), shadow : (fSellerAddress1.untouched || fSellerAddress1.valid)}"
+                            placeholder="Address" class="form-control p-3 mb-3" formControlName="fSellerAddress1">
+                    </div>
+                    <div>
+                        <label for="Company Name">City</label>
+                        <select [(ngModel)]="sellerAddressCityName" class="form-control"
+                            [ngClass]="{danger : (fSellerCityId.touched && fSellerCityId.invalid), shadow : (fSellerCityId.untouched || fSellerCityId.valid)}"
+                            formControlName="fSellerCityId">
+                            <option value="">Choose city</option>
+                            <ng-container *ngFor="let lt of AddressCities">
+                                <option value="{{lt.cityName}}"
+                                    *ngIf="sellerAddressCityName == lt.cityName && lt.cityName != 'Dummy'"
+                                    [selected]="true">{{lt.cityName}}</option>
+                                <option value="{{lt.cityName}}"
+                                    *ngIf="sellerAddressCityName != lt.cityName && lt.cityName != 'Dummy'">
+                                    {{lt.cityName}}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button class="btn btn-outline-danger" data-dismiss="modal" (click)="DeleteAddress()" *ngIf='AddressFlag == false;'>
+                    <i class="fas fa-trash"></i>&nbsp;Delete
+                </button>
+                <button class="btn btn-outline-primary" data-dismiss="modal" (click)="UpdateAddress()" *ngIf='AddressFlag == false;'>
+                    <i class="fas fa-pencil-alt"></i>&nbsp;Update
+                </button>
+                <button class="btn btn-outline-success" data-dismiss="modal" (click)="CreateAddress()" *ngIf='AddressFlag == true'>
+                    <i class="fas fa-plus"></i>&nbsp;Insert
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="SellerProductModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="AddImagePath='';productId=0" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <select class="form-control" (change)="SetImagePath()" [(ngModel)]="productId">
+                    <option value="0">Choose product</option>
+                    <ng-container *ngFor="let l of ProductsData">
+                        <option (click)="SelectProduct(l.productId)" value="{{l.productId}}">{{l.productName}}</option>
+                    </ng-container>
+                </select>
+                <div class="row mt-3" *ngIf="AddImagePath!=''">
+                    <div class="col-md-4 col-6 col-sm-6">
+                        <div class="card  border border-white">
+                            <div class="card-body">
+                                <span class="cancelImage text-danger" (click)="AddImagePath='';productId=0">
+                                    <i class="fas fa-times"></i>
+                                </span>
+                                <a>
+                                    <img src="../../../{{AddImagePath}}" *ngIf="imgPath(AddImagePath)" alt="Image"
+                                        class="seachProduct card-img">
+                                    <img src="{{AddImagePath}}" *ngIf="!imgPath(AddImagePath)" alt="Image"
+                                        class="seachProduct card-img">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" (click)="AddImagePath='';productId=0" data-dismiss="modal">Close</button>
+                <button class="btn btn-outline-success" [disabled]='productId==0 ' data-dismiss="modal" (click)="CreateSellerProduct()">
+                    <i class="fas fa-plus"></i>&nbsp;Insert
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="SellerDeliverableModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close"  data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <select class="form-control" [(ngModel)]="cityAddressId">
+                    <option value="0">Choose city</option>
+                    <ng-container *ngFor="let l of AllCities">
+                        <option *ngIf="l.cityName!='Dummy'" value="{{l.cityId}}">{{l.cityName}}</option>
+                    </ng-container>
+                </select>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger"  data-dismiss="modal">Close</button>
+                <button class="btn btn-outline-success"[disabled]='cityAddressId==0' (click)="CreateSellerDeliverable()" data-dismiss="modal" >
+                    <i class="fas fa-plus"></i>&nbsp;Insert
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+           
+            <div class="modal-body p-5">
+                <p class="h4 font-weight-normal mb-2">Are you sure you want to delete?</p>
+                <div class="row mt-3">
+                    <div class="col-6 text-center">
+                        <button class="btn btn-outline-danger" data-dismiss="modal" (click)="DeleteSeller()"> <i class="fas fa-trash"></i> &nbsp;Delete</button>
+                    </div>
+                    <div class="col-6 text-center">
+                        <button class="btn btn-outline-dark" data-dismiss="modal"><i class="fas fa-times"></i>&nbsp;Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

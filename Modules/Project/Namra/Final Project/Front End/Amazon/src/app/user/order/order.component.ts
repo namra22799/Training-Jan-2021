@@ -97,9 +97,20 @@ export class OrderComponent implements OnInit {
       this.orderService.GetOrdersByUser(this.user.userId as number).subscribe(dt => {
         this.orders = dt;
 
+      },
+      (error)=>{
+        this.router.navigate(['../Login'], { relativeTo: this.route });
       });
       this.orderService.GetProductByUser(this.user.userId as number).subscribe(dt => {
         this.products = dt;
+        if(dt.length==0)
+        {
+          this.checkOrderFlag = true;
+        }
+        else
+        {
+          this.checkOrderFlag = false;
+        }
         for (let index = 0; index < this.products.length; index++) {
           this.sellers = [];
           this.sellerService.GetSellerByProduct(this.products[index].productId).subscribe(datas => {
@@ -131,17 +142,34 @@ export class OrderComponent implements OnInit {
             }
             this.map.set(index, this.sellers);
             this.sellers = [];
+
           });
         }
-        console.log(this.map);
-        console.log(this.orderAll)
+
         this.sellersId.length = this.products.length;
+      },
+      (error)=>{
+        this.router.navigate(['../Login'], { relativeTo: this.route });
       });
     });
   }
   addresses: UserAddress[] = [];
   check(id: number | undefined) {
     this.AddressId = id as number;
+  }
+  deleteAddress(id : number | undefined)
+  {
+    this.userAddService.Delete(id as number).subscribe(data =>{
+      if(data == true)
+      {
+        alert("deleted successfully...");
+        this.getAddress();
+      }
+      else
+      {
+        alert("Something went wrong, please try it after some time...");
+      }
+    })
   }
   getAddress() {
     this.loginService.GetUserDataByLogin(localStorage.getItem("UserName") as string).subscribe(data => {
@@ -192,6 +220,19 @@ export class OrderComponent implements OnInit {
       });
     }
   }
+  checkOrderFlag = false;
+  checkOrders()
+  {
+    if(this.orderAll.length ==0)
+    {
+      this.checkOrderFlag = true;
+    }
+    else
+    {
+      this.checkOrderFlag = false;
+    }
+  }
+  LatestOrderId : number = 0 ;
   placeOrders() {
     console.log(this.orderAll);
     if (this.AddressId == 0) {
@@ -199,14 +240,17 @@ export class OrderComponent implements OnInit {
     }
     else {
       this.orderAll.forEach(element => {
-        this.placedService.PlaceOrders(element, this.AddressId).subscribe(data => {
-          if (data == false) {
-            alert("Your order is not placed...");
-          }
+        this.placedService.GetLastOrderId().subscribe(lastOrder=>{
+          this.LatestOrderId =  lastOrder + 1;
+          this.placedService.PlaceOrders(element, this.AddressId, this.LatestOrderId).subscribe(data => {
+            if (data == false) {
+              alert("Your order is not placed...");
+            }
+            this.getData();
+          });
         });
       });
       alert("Order is placed successfully...");
-      this.getData();
       // this.placedService.PlaceOrders(this.orderAll, this.AddressId).subscribe(data=>{
       //   console.log(data);
       //   if(data == true)

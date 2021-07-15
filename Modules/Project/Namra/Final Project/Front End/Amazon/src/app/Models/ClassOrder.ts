@@ -14,6 +14,7 @@ export interface Order {
 }
 
 export interface PlacedOrder {
+    poId ?: number;
     placedOrderId: number;
     userId: number;
     productId: number;

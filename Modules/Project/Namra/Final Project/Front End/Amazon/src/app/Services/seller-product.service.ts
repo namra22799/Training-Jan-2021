@@ -23,5 +23,8 @@ export class SellerProductService {
   {
     return this.http.delete<boolean>(this.URL+"SellerProduct/Delete/"+id);
   }
-
+  GetSellerProductBySeller(id : number) : Observable<SellerProduct[]>
+  {
+    return this.http.get<SellerProduct[]>(this.URL+"SellerProduct/GetBySellerId/"+id);
+  }
 }

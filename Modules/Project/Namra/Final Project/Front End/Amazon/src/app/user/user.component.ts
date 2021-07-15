@@ -5,6 +5,7 @@ import { User } from '../Models/User';
 import { Product } from '../Product';
 import { LoginService } from '../Services/login.service';
 import { PlaceOrderService } from '../Services/place-order.service';
+import { UserService } from '../Services/user.service';
 
 @Component({
   selector: 'app-user',
@@ -13,7 +14,7 @@ import { PlaceOrderService } from '../Services/place-order.service';
 })
 export class UserComponent implements OnInit {
 
-  constructor(private placedService : PlaceOrderService,private router : Router, private route : ActivatedRoute, private loginService : LoginService) { }
+  constructor(private userService : UserService, private placedService : PlaceOrderService,private router : Router, private route : ActivatedRoute, private loginService : LoginService) { }
 
   ngOnInit(): void {
     this.loginService.GetUserDataByLogin(localStorage.getItem("UserName") as string).subscribe(data=>{
@@ -30,6 +31,8 @@ export class UserComponent implements OnInit {
 
   products : Product[] = [];
   placedProducts : PlacedOrder[] = [];
+  placedProductDisplay : PlacedOrder[] = [];
+  flagOrders = false;
   GetPlacedOrder()
   {
     this.loginService.GetUserDataByLogin(localStorage.getItem("UserName") as string).subscribe(data=>
@@ -37,25 +40,38 @@ export class UserComponent implements OnInit {
         this.user = data;
         this.placedService.GetPlacedOrderByUser(this.user.userId as number).subscribe(dt=>{
           this.placedProducts = dt;
+          // this.placedProducts.forEach(element => {
+          //   this.placedProductDisplay.forEach(p => {
+          //     if(p.placedOrderId==element.placedOrderId)
+          //     {
+          //       this.flagOrders = true;
+          //     }
+          //     else
+          //     {
+          //       this.flagOrders = false;
+          //     }
+          //   });
+          // });
         });
         this.placedService.GetProductPlacedByUser(this.user.userId as number).subscribe(dt=>{
           this.products = dt;
         });
       });
   }
-  Return(id : number)
+  Return(id : number | undefined)
   {
-    this.placedService.UpdatePlacedOrder(id,"Returned").subscribe(data=>{
+    this.placedService.UpdatePlacedOrder(id as number,"Returned").subscribe(data=>{
       if(data==true)
       {
         alert("Product is returned successfully..");
+        this.GetPlacedOrder();
       }
       else
       {
         alert("Not returned...");
       }
     });
-    this.GetPlacedOrder();
+    
   }
   imgPath(str : string)
   {

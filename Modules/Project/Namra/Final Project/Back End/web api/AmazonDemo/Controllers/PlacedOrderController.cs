@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AmazonDemo.Controllers
 {
+    [Authorize(Roles = UserRolesAmazon.User)]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class PlacedOrderController : ControllerBase
@@ -21,8 +22,10 @@ namespace AmazonDemo.Controllers
         private readonly IUserAddress userAddress;
         private readonly IProduct product;
         private readonly IOrder order;
-        public PlacedOrderController(IOrder order,IProduct product, IUserAddress userAddress, AmazonContext _context, IPlacedOrder placed)
+        private readonly ISeller seller;
+        public PlacedOrderController(ISeller seller,IOrder order,IProduct product, IUserAddress userAddress, AmazonContext _context, IPlacedOrder placed)
         {
+            this.seller = seller;
             this.order = order;
             this.product = product;
             this.context = _context;
@@ -72,12 +75,19 @@ namespace AmazonDemo.Controllers
             return placedOrder.Any();
         }
 
-        [HttpPost("{AddressId}/{SalerId}")]
-        public int Create([FromBody] Order od, int AddressId, int SalerId)
+        [HttpGet]
+        public long LastPlacedOrder()
         {
-            if (userAddress.Any(s => s.UserAddressId == AddressId))
+            return context.PlacedOrders.ToList().Last().PlacedOrderId;
+        }
+
+        [HttpPost("{AddressId}/{SalerId}/{OrderId}")]
+        public int Create([FromBody] Order od,int OrderId, int AddressId, int SalerId)
+        {
+            if (userAddress.Any(s => s.UserAddressId == AddressId) && seller.Any(s => s.SellerId == SalerId)) 
             {
                 PlacedOrder placed = new PlacedOrder();
+                placed.PlacedOrderId = OrderId;
                 placed.UserId = od.UserId;
                 placed.ProductId = od.ProductId;
                 placed.Bill = od.Bill;
@@ -96,8 +106,8 @@ namespace AmazonDemo.Controllers
             }
         }
         // To create order of multiple items
-        [HttpPost("{AddressId}")]
-        public bool Creates([FromBody] OrderAll orderAlls , int AddressId)
+        [HttpPost("{AddressId}/{LatestOrderId}")]
+        public bool Creates([FromBody] OrderAll orderAlls , int AddressId, int LatestOrderId)
         {
             if(!order.Any(s=>s.OrderId == orderAlls.OrderId))
             {
@@ -105,7 +115,8 @@ namespace AmazonDemo.Controllers
             }
             long orderId = 0;
             PlacedOrder pc = new PlacedOrder();
-            
+
+                pc.PlacedOrderId = LatestOrderId;
                 pc.AddressId = AddressId;
                 pc.ProductId = orderAlls.ProductId;
                 pc.UserId = orderAlls.UserId;
@@ -125,9 +136,9 @@ namespace AmazonDemo.Controllers
         [HttpPut("{id}/{status}")]
         public bool Update(int id, String status)
         {
-            if (placedOrder.Any(s => s.PlacedOrderId == id))
+            if (placedOrder.Any(s => s.POId == id))
             {
-                PlacedOrder placed = placedOrder.Find(s=> s.PlacedOrderId == id).First();
+                PlacedOrder placed = placedOrder.Find(s=> s.POId == id).First();
                 placed.PlacedStatus = status;
                 placedOrder.Update(placed);
                 return true;

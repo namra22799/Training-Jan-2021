@@ -17,6 +17,7 @@ export class SearchComponent implements OnInit {
   products : Product[]=[];
   lenght : number =0;
   ngOnInit(): void {
+    window.scroll(0,0);
     this.products = [];
     this.route.params.subscribe(param=>{
       this.searchName = param['name'];
@@ -30,6 +31,7 @@ export class SearchComponent implements OnInit {
   }
   search( seachN : string)
   {
+    window.scroll(0,0);
     this.router.navigate(['../../Search',seachN],{relativeTo : this.route});
   }
   product(Id : number)

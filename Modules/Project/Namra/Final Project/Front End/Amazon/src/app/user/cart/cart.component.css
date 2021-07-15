@@ -29,7 +29,15 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+.dangerLogo{
+  background: -webkit-linear-gradient(#eee, rgb(134, 0, 0));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
+.table-danger{
+  background: repeating-linear-gradient(#dd7474, #dd7474 49.9%, #cb4949 50.1%, #cb4949 100%);;
+}
 
 .ribbon {
     width: 150px;

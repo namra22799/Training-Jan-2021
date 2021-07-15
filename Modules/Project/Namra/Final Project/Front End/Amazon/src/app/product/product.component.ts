@@ -26,14 +26,24 @@ export class ProductComponent implements OnInit {
   related: string = '';
   public productDescription: ProductDescription = { productId: 0, productDescription1: '', productDescriptionId: 0, extraDescription: '', relatedCategory: '' };
   private sub: any;
+  description = '';
   ngOnInit(): void {
+    window.scroll(0,0);
     this.productDescription = { productId: 0, productDescription1: '', productDescriptionId: 0, extraDescription: '', relatedCategory: '' };
     this.route.params.subscribe(params => {
       
       this.DescritionService.GetDescriptionById(params['id']).subscribe(data => {
         this.productDescription = data;
-        console.log(this.productDescription);
-        this.related = this.productDescription.relatedCategory;
+        if(this.productDescription.productDescription1 == '')
+        {
+          this.related = '';
+          this.description = 'Please check description after some time, yet not uploaded...';
+        }
+        else
+        {
+          this.description =  this.productDescription.productDescription1;
+          this.related = this.productDescription.relatedCategory;
+        }
       });
 
       this.service.GetProductById(params['id']).subscribe(data => {
@@ -89,6 +99,7 @@ export class ProductComponent implements OnInit {
     UserId : 0,
     Quantity : 1
   }
+  ImageModal = '';
   Buy(){
     let user;
     if(localStorage.getItem("UserName") as string == '')

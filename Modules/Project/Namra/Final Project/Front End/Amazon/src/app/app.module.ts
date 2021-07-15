@@ -28,6 +28,7 @@ import { AdminSellerComponent } from './admin/admin-seller/admin-seller.componen
 import { AdminBrandComponent } from './admin/admin-brand/admin-brand.component';
 import { AdminCategoryComponent } from './admin/admin-category/admin-category.component';
 import { AdminSellerInfoComponent } from './admin/admin-seller-info/admin-seller-info.component';
+import { CustomerServiceComponent } from './customer-service/customer-service.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { AdminSellerInfoComponent } from './admin/admin-seller-info/admin-seller
     AdminSellerComponent,
     AdminBrandComponent,
     AdminCategoryComponent,
-    AdminSellerInfoComponent
+    AdminSellerInfoComponent,
+    CustomerServiceComponent
   ],
   imports: [
     BrowserModule,

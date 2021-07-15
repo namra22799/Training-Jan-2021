@@ -24,7 +24,17 @@ export class Section5Component implements OnInit {
     // console.log(this.to);
 
   }
-  
+  checkDesc()
+  {
+    if(this.Description.substr(this.Description.length -1) == '0')
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
   GetName(Token: string): any {
     try {
       return jwt_decode(Token);

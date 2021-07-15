@@ -343,11 +343,16 @@ namespace AmazonDemo.Migrations
 
             modelBuilder.Entity("AmazonDemo.Models.PlacedOrder", b =>
                 {
+                    b.Property<long>("POId")
+                       .ValueGeneratedOnAdd()
+                       .HasColumnType("bigint")
+                       .HasColumnName("POId")
+                       .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                  
                     b.Property<long>("PlacedOrderId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
-                        .HasColumnName("PlacedOrderID")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnName("PlacedOrderID");
 
                     b.Property<int>("AddressId")
                         .HasColumnType("int");

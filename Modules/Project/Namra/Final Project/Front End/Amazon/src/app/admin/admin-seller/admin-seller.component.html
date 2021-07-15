@@ -16,7 +16,7 @@
     </div>
     <div class="col-md-1 col-sm-0 "></div>
     <div class="col-md-2 col-sm-12 col-12 text-center">
-        <button class="btn btn-outline-success" data-toggle='modal' data-target='#insertProduct'
+        <button class="btn btn-outline-success" data-toggle='modal' data-target='#AddSeller'
             >+&nbsp;Seller</button>
     </div>
 </div>
@@ -36,10 +36,58 @@
         </ng-container>
         <div class="col-lg-3 col-md-4 col-sm-6 col-6 mb-2">
             <div class="card AddBack h-100" data-toggle='modal'
-                data-target='#CategoryModal'>
+                data-target='#AddSeller'>
                 <div class="card-body AddColor p-4 center h4  text-center">
                     <i class="fas fa-plus AddColor"></i>&nbsp; Add
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="AddSeller" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="sellerForm" #f='ngForm'>
+                    <div>
+                        <label for="Seller Name">Seller Name</label>
+                        <input type="text" [(ngModel)]="seller.sellerName"
+                            [ngClass]="{danger : (fSellerName.touched && fSellerName.invalid), shadow : (fSellerName.untouched || fSellerName.valid)}"
+                            placeholder="Seller Name" class="form-control p-3 mb-3" formControlName="fSellerName">
+                    </div>
+                    <div>
+                        <label for="Seller Company">Seller Company</label>
+                        <input type="text" [(ngModel)]="seller.sellerCompanyName"
+                            [ngClass]="{danger : (fSellerCompanyName.touched && fSellerCompanyName.invalid), shadow : (fSellerCompanyName.untouched || fSellerCompanyName.valid)}"
+                            placeholder="Company Name" class="form-control p-3 mb-3" formControlName="fSellerCompanyName">
+                    </div>
+                    <div>
+                        <label for="Seller Contact">Seller Contact Number</label>
+                        <input type="text" [(ngModel)]="seller.sellerContactNo"
+                            [ngClass]="{danger : (fSellerContactNo.touched && fSellerContactNo.invalid), shadow : (fSellerContactNo.untouched || fSellerContactNo.valid)}"
+                            placeholder="Contact Number" class="form-control p-3 mb-3" formControlName="fSellerContactNo">
+                    </div>
+                    <div>
+                        <label for="Seller Email">Seller Email</label>
+                        <input type="text" [(ngModel)]="seller.sellerEmail"
+                            [ngClass]="{danger : (fSellerEmail.touched && fSellerEmail.invalid), shadow : (fSellerEmail.untouched || fSellerEmail.valid)}"
+                            placeholder="Email" class="form-control p-3 mb-3" formControlName="fSellerEmail">
+                    </div>
+                    
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" (click)="ResetSeller()">Reset</button>
+                <button class="btn btn-outline-success" (click)="AddSeller()" data-dismiss="modal" [disabled]='sellerForm.status=="INVALID"'>
+                    <i class="fas fa-plus"></i>&nbsp;Insert
+                </button>
             </div>
         </div>
     </div>

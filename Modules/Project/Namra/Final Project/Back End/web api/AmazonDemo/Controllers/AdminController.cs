@@ -47,6 +47,13 @@ namespace AmazonDemo.Controllers
             }
             
         }
+
+        [HttpGet("{AdminName}")]
+        public Admin GetAdminByName(string AdminName)
+        {
+            return this.admin.Find(s => s.AdminFullName == AdminName).First();
+        }
+
         [HttpPut("{AdminLogInId}")]
         public string UpdateAdmin(string AdminLogInId, [FromBody] Admin UpdateAdmin)
         {

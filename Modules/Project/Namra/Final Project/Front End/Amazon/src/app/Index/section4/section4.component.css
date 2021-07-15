@@ -1,7 +1,7 @@
 
 i:hover{
     color : rgb(255, 161, 73);
-    text-shadow: 2px 2px #000000;
+    text-shadow: -2px 2px #000000;
 }
 
 @media screen and (max-width : 600px) {
@@ -10,5 +10,14 @@ i:hover{
     }
     .section4Sign{
         font-size: 35px;
+    }
+}
+@media screen and (min-width : 600px) {
+    i{
+        transition: transform 250ms;
+    }
+    i:hover
+    {
+        transform: translateX(10px);
     }
 }

@@ -1,11 +1,14 @@
 <p class="text-center display-4 my-3">{{productDetail.productName}}</p>
 
 <div class="card-deck mx-2 my-3 mb-4" class="DisplayImageLG" *ngIf="Images.length != 0">
-    <div class="card  border border-white" *ngFor="let l of Images">
-        <div class=" h-100 card-body center">
+    <div class="card  border border-white" *ngFor="let l of Images;let idx = index">
+        <div class=" h-100 card-body center" *ngIf="idx<=3">
             <a>
-                <img src="{{l.imagePath}}" *ngIf="!Starts(l.imagePath)" width="100%" alt="" class="zoom card-img m-auto">
-                <img width="100%" *ngIf="Starts(l.imagePath)" src="../../{{l.imagePath}}" alt="Card1" class="zoom card-img m-auto">
+                <img src="{{l.imagePath}}" *ngIf="!Starts(l.imagePath)" width="100%" alt="" data-toggle='modal'
+                    data-target='#ImageModal' (click)="ImageModal=l.imagePath;" class="zoom card-img m-auto">
+                <img width="100%" *ngIf="Starts(l.imagePath)" src="../../{{l.imagePath}}" data-toggle='modal'
+                    data-target='#ImageModal' (click)="ImageModal=l.imagePath;" alt="Card1"
+                    class="zoom card-img m-auto">
             </a>
         </div>
     </div>
@@ -20,8 +23,10 @@
                 <div role="listbox" class="carousel-inner">
                     <ng-container *ngFor="let l of Images;let i = index">
                         <div class="carousel-item" [ngClass]="i == 0 ?'active':''">
-                            <img src="../../{{l.imagePath}}" *ngIf="Starts(l.imagePath)" width="100%" class="d-block m-auto SmImage" alt="">
-                            <img src="{{l.imagePath}}" *ngIf="!Starts(l.imagePath)" width="100%" class="d-block m-auto SmImage" alt="">
+                            <img src="../../{{l.imagePath}}" *ngIf="Starts(l.imagePath)" width="100%"
+                                class="d-block m-auto SmImage" alt="">
+                            <img src="{{l.imagePath}}" *ngIf="!Starts(l.imagePath)" width="100%"
+                                class="d-block m-auto SmImage" alt="">
                         </div>
                     </ng-container>
                     <a href="#slider3" data-slide="prev" class="carousel-control-prev">
@@ -40,11 +45,22 @@
     <div class="row my-4">
         <div class="col-md-4 text-center">
             <h3 class="font-weight-normal">Price</h3>
-            <span>{{productDetail.productPrice}}<i class="fas fa-rupee-sign"></i></span>
+            <span>
+                {{productDetail.productPrice}} &nbsp;<i class="fas fa-rupee-sign"></i>
+            </span>
+            <div class="row mt-2 p-3 border border-white rounded offerBack" *ngIf="productDetail.offer != 0">
+                <div class="col-12">
+                    Offer : {{productDetail.offer}} % <br>
+                    <span class="h4 mt-4">
+                        Final Price : {{productDetail.productPrice - productDetail.productPrice * productDetail.offer
+                        /100}} <i class="fas fa-rupee-sign"></i>
+                    </span>
+                </div>
+            </div>
         </div>
-        <div class="col-md-7">
+        <div class="col-md-7 center p-3">
             <p>
-                {{productDescription.productDescription1}}
+                {{description}}
             </p>
         </div>
     </div>
@@ -59,4 +75,34 @@
     </div>
     <div class="col-md-4 col-2"></div>
 </div>
-<app-similar-product [product]="productDescription" [related]="productDescription.relatedCategory"></app-similar-product>
+<app-similar-product [product]="productDescription" [related]="productDescription.relatedCategory">
+</app-similar-product>
+
+<div class="modal fade" id="ImageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="row h-100">
+                    <div class="col-10 center">
+                        <img src="{{ImageModal}}" width="100%" class="ImgModal" *ngIf="!Starts(ImageModal)">
+                        <img src="../../{{ImageModal}}" width="100%" class="ImgModal" *ngIf="Starts(ImageModal)">
+                    </div>
+                    <div class="col-2 overflow-auto sideImages">
+                        <ng-container *ngFor="let l of Images">
+                            <img src="{{l.imagePath}}" *ngIf="!Starts(l.imagePath)" width="100%" alt=""
+                                (mouseover)="ImageModal=l.imagePath;"
+                                class="card-img  mb-2">
+                            <img width="100%" *ngIf="Starts(l.imagePath)" src="../../{{l.imagePath}}"
+                                (mouseover)="ImageModal=l.imagePath;"
+                                 class="card-img  mb-2">
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

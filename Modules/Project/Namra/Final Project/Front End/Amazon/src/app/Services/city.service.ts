@@ -28,4 +28,8 @@ export class CityService {
   {
     return this.httpClient.get<number>(this.URL+"City/GetIdByCityName/"+name);
   }
+  GetCityById(num : number) : Observable<City>
+  {
+    return this.httpClient.get<City>(this.URL+"City/GetById/"+num);
+  }
 }

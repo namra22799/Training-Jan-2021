@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Category } from 'src/app/Models/BrandCategory';
 import { BrandCategoryService } from 'src/app/Services/brand-category.service';
 
@@ -9,10 +10,18 @@ import { BrandCategoryService } from 'src/app/Services/brand-category.service';
 })
 export class AdminCategoryComponent implements OnInit {
 
-  constructor(private service : BrandCategoryService) { }
+  constructor(private router : Router,private service : BrandCategoryService) { }
 
   ngOnInit(): void {
+    this.check();
     this.GetCategories();
+  }
+  check()
+  {
+    if(localStorage.getItem("Admin")=='')
+    {
+      this.router.navigate(['./Admin']);
+    }
   }
   findName = '';
   AddFlag = false;

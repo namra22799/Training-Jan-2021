@@ -38,7 +38,20 @@ namespace AmazonDemo.Controllers
         [HttpGet("{Id}")]
         public ProductDescription GetByProductId(int Id)
         {
-            return productDescription.Find(s => s.ProductId == Id).First();
+           if(productDescription.Any(s=>s.ProductId == Id))
+            {
+                return productDescription.Find(s => s.ProductId == Id).First();
+            }
+           else
+            {
+                ProductDescription description = new ProductDescription();
+                description.ProductId = 0;
+                description.ExtraDescription = "";
+                description.ProductDescription1 = "";
+                description.RelatedCategory = "";
+                description.ProductDescriptionId = 0;
+                return description;
+            }
         }
 
         // Search by extra description return products

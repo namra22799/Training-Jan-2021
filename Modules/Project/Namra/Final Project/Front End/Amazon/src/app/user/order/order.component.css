@@ -10,12 +10,13 @@
     .imgOrder{
         max-height: 100px;
     }
-    .table{
-        display: none;
-    }
+    
     .display-3{
         font-size: xx-large;
     }
+}
+.tableScroll{
+    overflow-x: auto;
 }
 .bagLogo
 {

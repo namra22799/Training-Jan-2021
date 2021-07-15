@@ -63,13 +63,14 @@ export class NavbarComponent implements OnInit {
 
   @Input() navbar: boolean = true;
   ngOnInit(): void {
+    this.checkLogin();
     this.checkUrl();
   }
   NavbarFlag = true;
   UserName = '';
-  UId =0;
+  UId = 0;
   searchName = '';
-  User: User = {userId : 0, userFirstName: '', userMiddleName: '', userLastName: '', userContactNo: '', userEmail: '', userLogIn: '' }
+  User: User = { userId: 0, userFirstName: '', userMiddleName: '', userLastName: '', userContactNo: '', userEmail: '', userLogIn: '' }
   checkUrl() {
     setTimeout(() => {
       if (window.location.href == "http://localhost:4200/Login") {
@@ -78,7 +79,7 @@ export class NavbarComponent implements OnInit {
       else {
         this.NavbarFlag = true;
       }
-     
+
       if (localStorage.getItem("UserName") == '') {
         this.UserName = 'SignIn';
         this.CartLength = 0;
@@ -88,13 +89,21 @@ export class NavbarComponent implements OnInit {
           this.User = data;
           this.UserName = this.User.userFirstName;
           this.UId = this.User.userId as number;
+        },
+        (error)=>{
+          this.UserName = 'SignIn';
+        this.CartLength = 0;
         });
-        this.cartService.GetCartByUser(this.UId).subscribe(data=>{
+        this.cartService.GetCartByUser(this.UId).subscribe(data => {
           this.carts = data;
           this.CartLength = this.carts.length;
+        },
+        (error)=>{
+          this.UserName = 'SignIn';
+        this.CartLength = 0;
         });
       }
-      
+
       this.checkUrl();
     }, 500);
   }
@@ -119,7 +128,7 @@ export class NavbarComponent implements OnInit {
       this.router.navigate(['../Cart'], { relativeTo: this.route });
     }
   }
-  Order(){
+  Order() {
     if (localStorage.getItem("UserName") == '') {
       this.router.navigate(['../Login'], { relativeTo: this.route });
     }
@@ -127,21 +136,30 @@ export class NavbarComponent implements OnInit {
       this.router.navigate(['../Orders'], { relativeTo: this.route });
     }
   }
-  search()
-  {
-    if(this.searchName == '')
-    {
-      this.router.navigate(['../Search','All'],{relativeTo : this.route});
-      this.searchName='';
+  search() {
+    if (this.searchName == '') {
+      this.router.navigate(['../Search', 'All'], { relativeTo: this.route });
+      this.searchName = '';
     }
-    else
-    {
-      this.router.navigate(['../Search',this.searchName],{relativeTo : this.route});
-      this.searchName='';  
+    else {
+      this.router.navigate(['../Search', this.searchName], { relativeTo: this.route });
+      this.searchName = '';
     }
   }
-  Location()
-  {
-   
+  checkLogin() {
+    setTimeout(() => {
+      if (localStorage.getItem('Expiration') != '') {
+        let sd: Date = new Date();
+        let date: Date = new Date(localStorage.getItem('Expiration') as string);
+        if (sd.getFullYear() <= date.getFullYear() && sd.getMonth() <= date.getMonth() && sd.getDate() < date.getDate()) {
+          this.loginService.ResetLogin();
+          this.router.navigate(['../Login'], { relativeTo: this.route });
+        }
+      }
+      this.checkLogin();
+    }, 500);
+  }
+  Location() {
+
   }
 }

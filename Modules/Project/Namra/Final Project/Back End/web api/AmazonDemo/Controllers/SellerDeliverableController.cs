@@ -20,6 +20,18 @@ namespace AmazonDemo.Controllers
             this.sellerDeliverable = sellerDeliverable;
         }
 
+        [HttpGet]
+        public IEnumerable<SellerDeliverable> GetAll()
+        {
+            return this.sellerDeliverable.GetAll();
+        }
+
+        [HttpGet("{SellerId}")]
+        public IEnumerable<SellerDeliverable> GetBySellerId(int SellerId)
+        {
+            return sellerDeliverable.Find(s => s.SellerId == SellerId);
+        }
+
         [HttpGet("{SellerId}")]
         public IEnumerable<City> GetCitiesBySeller(int SellerId)
         {

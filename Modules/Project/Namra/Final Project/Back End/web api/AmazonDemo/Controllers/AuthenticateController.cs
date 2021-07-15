@@ -76,7 +76,7 @@ namespace Day17RoleBased.Controllers
                 var token = new JwtSecurityToken(
                     issuer: _configuration["JWT:ValidIssuer"],
                     audience: _configuration["JWT:ValidAudience"],
-                    expires: DateTime.Now.AddMinutes(1),
+                    expires: DateTime.Now.AddHours(3),
                     claims: authClaims,
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
@@ -113,6 +113,16 @@ namespace Day17RoleBased.Controllers
             var result = await userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
                 return StatusCode(StatusCodes.Status500InternalServerError, new ResponseAmazon { Status = "Error", Message = "User creation failed! Please check user details and try again." });
+            if (!await roleManager.RoleExistsAsync(UserRolesAmazon.Admin))
+                await roleManager.CreateAsync(new IdentityRole(UserRolesAmazon.Admin));
+            if (!await roleManager.RoleExistsAsync(UserRolesAmazon.User))
+                await roleManager.CreateAsync(new IdentityRole(UserRolesAmazon.User));
+
+            if (await roleManager.RoleExistsAsync(UserRolesAmazon.User))
+            {
+                await userManager.AddToRoleAsync(user, UserRolesAmazon.User);
+            }
+
             setUserPassword(model.Username, model.Password);
             return Ok(new ResponseAmazon { Status = "Success", Message = "User created successfully!" });
         }

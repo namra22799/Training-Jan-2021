@@ -9,7 +9,7 @@
                     class="card-input-element" />
                 <div class="card text-dark border border-dark card-input">
                     <div class="card-header h5  ">
-                        <span class="float-right float-top"><i class="fas fa-times"></i></span> {{l.userAddressFullName}} 
+                        <span class="float-right float-top" (click)="deleteAddress(l.userAddressId)"><i class="fas fa-times"></i></span> {{l.userAddressFullName}} 
                     </div>
                     <div class="card-footer">
                         {{l.userAdressContact}} <br>
@@ -32,9 +32,9 @@
         </div>
     </div>
 </div>
-<div class="container">
-    <table class="table border rounded-bottom border-warning">
-        <tr class="table-success text-center">
+<div class="container tableScroll">
+    <table class="table border rounded-bottom border-warning ">
+        <tr class="table-success text-center text-dark">
             <td>
                 Product
             </td>
@@ -49,6 +49,11 @@
             </td>
             <td>
                 Prize
+            </td>
+        </tr>
+        <tr *ngIf="checkOrderFlag == true">
+            <td colspan="5" class="text-center p-4 text-danger display-4">
+                Find out exiting products and place order...
             </td>
         </tr>
         <ng-container *ngFor="let l of orders;let idx = index">
@@ -103,7 +108,7 @@
 
     </table>
 </div>
-
+<!-- 
 <div class="smOrder">
     <div *ngFor="let l of orders; let idx = index">
         <div class="row" [ngClass]="{dangerOrder : flags[idx]}">
@@ -145,7 +150,7 @@
         </div>
         <hr>
     </div>
-</div>
+</div> -->
 
 <hr class="my-5">
 <div class="row mb-5">
@@ -226,7 +231,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button"  class="btn btn-primary" [disabled]='addressForm.status=="INVALID"'
+                <button type="button"  class="btn btn-primary" data-dismiss="modal" [disabled]='addressForm.status=="INVALID"'
                     (click)="AddAddress();">+&nbsp;Add Address</button>
             </div>
         </div>

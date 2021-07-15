@@ -1,0 +1,84 @@
+.backSeller
+{
+    background-image: linear-gradient(to right, rgb(121, 255, 244) , rgb(159, 255, 140));
+}
+
+.containerTitle
+{
+    box-shadow: 0px 0px 28px #888888;
+}
+@media screen and (max-width : 600px) {
+    .display-4
+    {
+        font-size: x-large;
+    }
+}
+.danger{
+    box-shadow: 0 15px 25px 0 rgba(255, 0, 0, 0.2), 0 16px 20px 0 rgba(255, 0, 0, 0.19);
+}
+.shadow{
+    box-shadow: 0 25px 25px 0 rgba(0, 0, 0, 0.2), 0 16px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.textVerti{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+}
+.AddColor
+{
+    background: -webkit-linear-gradient(rgb(0, 255, 234) , rgb(43, 255, 0));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px black;
+}
+.AddBack{
+    background-image: linear-gradient(to right, rgb(255, 121, 121) , rgb(255, 255, 140));
+}
+.backBrand
+{
+    background-image: linear-gradient(to right, rgb(121, 255, 244) , rgb(159, 255, 140));
+}
+.ProductBack{
+    color : white;
+    text-shadow: 2px 2px 15px rgb(49, 49, 49);
+}
+.cancelImage{
+    position: absolute;
+    top: -0%;
+    left: 86%;    
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+}
+@media screen and (min-width : 600px) {
+    .seachProduct{
+        max-height: 250px;
+    }
+    .card-height{
+        height: 300px;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        flex-direction: column;
+    }
+   
+}
+@media screen and (max-width : 600px) {
+    .seachProduct{
+        max-height: 200px;
+    }
+    .display-4{
+        font-size: 25px;
+    }
+  
+}
+.center
+{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+}
